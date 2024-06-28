@@ -309,6 +309,13 @@ char *edit_alloc(void *cookie, size_t *count) {
 
 void edit_prompt(void *cookie, char *pr) {
 	prompt = pr;
+	// replace newlines and tabs in prompt
+	// because bestline doesn't support them
+	while (*prompt == '\n' || *prompt == '\t')
+		prompt++;
+	for (char *p = prompt; *p; p++)
+		if (*p == '\n' || *p == '\t')
+			*p = ' ';
 }
 
 void edit_free(void *cookie) {
